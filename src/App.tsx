@@ -9,7 +9,11 @@ import wemadeit2 from "./assets/wemadeit2.png"
 import wemadeit3 from "./assets/wemadeit3.png"
 import wemadeit4 from "./assets/wemadeit4.png"
 
-const FadeImages = ({ images }) => {
+type FadeImagesProps = {
+  images: string[];
+};
+
+const FadeImages: React.FC<FadeImagesProps> = ({ images }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Change the image every 3 seconds
@@ -21,7 +25,7 @@ const FadeImages = ({ images }) => {
     return () => clearInterval(interval); // Clear the interval on unmount
   }, [images.length]);
 
-  const opacityTransition = (index) => {
+  const opacityTransition = (index: number) => {
     if (index === 0) {
       return "transition-opacity duration-1000 opacity-100";
     }
@@ -62,7 +66,7 @@ const afterImages = [
   wemadeit1, wemadeit2, wemadeit3, wemadeit4
 ];
 
-function SlideShow(images) {
+function SlideShow(images: string[]) {
   return (
     <div className="w-128 h-auto justify-center items-center bg-gray-200">
       <FadeImages images={images} />
@@ -70,9 +74,13 @@ function SlideShow(images) {
   );
 }
 
-const DDayCounter = ({ targetDate }) => {
+type DDayCounterProps = {
+  targetDate: string;
+};
+
+const DDayCounter: React.FC<DDayCounterProps> = ({ targetDate }) => {
   const calculateTimeLeft = () => {
-    const difference = new Date(targetDate) - new Date();
+    const difference = new Date(targetDate).getTime() - new Date().getTime();
     if (difference > 0) {
       return {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
